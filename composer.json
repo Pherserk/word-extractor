@@ -1,0 +1,20 @@
+{
+    "name": "pherserk/word-extractor",
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.0",
+        "ext-mbstring": "*",
+        "pherserk/language": "dev-master",
+        "pherserk/sign-provider": "dev-master",
+	"pherserk/word": "dev-master"
+    },
+    "require-dev": {
+        "ext-xml": "*",
+        "phpunit/phpunit": "6.4.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pherserk\\WordExtractor\\" : "src/"
+        }
+    }
+}
