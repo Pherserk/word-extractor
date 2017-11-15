@@ -10,13 +10,44 @@ class WordExtractor
 {
     /**
      * @param string $text
-     * @param ClassifiedSign[] $classifiedSigns
+     * @param ClassifiedSign[] $uniqueClassifiedSigns
      * @param bool $unique
      * 
      * @return UnclassifiedWord[]
      */
-    public static function extract(string $text, array $classifiedSigns, bool $unique)
+    public static function extract(string $text, array $uniqueClassifiedSigns, bool $unique)
     {
-    
+        $classifiedSignsByType = static::rearrangeUniqueClassifiedSignsByType($uniqueClassifiedSigns);
+        
+        $breakTokens = [];
+        foreach ($classifiedSignsByType as $type => $classifiedSignByType) {
+            switch ($type) {
+                case ClassifiedSign::SEPARATION_PUNCTATION_TYPE :
+                case ClassifiedSign::TERMINATING_PUNCTATION_TYPE :
+                case ClassifiedSign::EMPTY_TYPE :
+                case ClassifiedSign::WORD_TYPE :
+                    $breakTokens[] = $classifiedSignByType->getSign();
+                break;
+            }
+        }
+       
+        if (!$breakTokens) {
+            return [$text];
+        }
+
+        $regexp = implode('|', $breakTokens);
+   
+        return preg_split("/$regexp/", $text);     
     } 
+
+    private static function rearrangeUniqueClassifiedSignsByType(array $uniqueClassifiedSigns)
+    {
+        $results = [];
+
+        foreach ($uniqueClassifiedSigns as $uniqueClassifiedSign) {
+            $results[$uniqueClassifiedSign->getType()][] = $uniqueClassifiedSign->getSign();
+        }
+
+        return $results;
+    }
 }
