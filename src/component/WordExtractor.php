@@ -23,7 +23,7 @@ class WordExtractor
         foreach ($classifiedSignsByType as $type => $classifiedSignByType) {
             switch ($type) {
                 case ClassifiedSign::SEPARATION_PUNCTATION_TYPE :
-                case ClassifiedSign::TERMINATING_PUNCTATION_TYPE :
+                case ClassifiedSign::TERMINATION_PUNCTATION_TYPE :
                 case ClassifiedSign::EMPTY_TYPE :
                 case ClassifiedSign::WORD_TYPE :
                     $breakTokens[] = $classifiedSignByType->getSign();
