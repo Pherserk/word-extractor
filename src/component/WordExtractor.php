@@ -20,17 +20,19 @@ class WordExtractor
         $classifiedSignsByType = static::rearrangeUniqueClassifiedSignsByType($uniqueClassifiedSigns);
         
         $breakTokens = [];
-        foreach ($classifiedSignsByType as $type => $classifiedSignByType) {
-            switch ($type) {
-                case ClassifiedSign::SEPARATION_PUNCTATION_TYPE :
-                case ClassifiedSign::TERMINATION_PUNCTATION_TYPE :
-                case ClassifiedSign::EMPTY_TYPE :
-                case ClassifiedSign::WORD_TYPE :
-                    $breakTokens[] = $classifiedSignByType->getSign();
-                break;
+        foreach ($classifiedSignsByType as $type => $classifiedSigns) {
+            foreach ($classifiedSigns as $classifiedSign) {
+                switch ($type) {
+                    case ClassifiedSign::SEPARATION_PUNCTATION_TYPE :
+                    case ClassifiedSign::TERMINATION_PUNCTATION_TYPE :
+                    case ClassifiedSign::EMPTY_TYPE :
+                    case ClassifiedSign::WORD_TYPE :
+                        $breakTokens[] = $classifiedSign;
+                    break;
+                }
             }
         }
-       
+ 
         if (!$breakTokens) {
             return [$text];
         }
