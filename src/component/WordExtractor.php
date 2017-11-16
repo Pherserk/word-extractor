@@ -3,6 +3,7 @@
 namespace Pherserk\WordExtractor\component;
 
 use Pherserk\Language\model\LanguageInterface;
+use Pherserk\SignExtractor\component\SignExtractor;
 use Pherserk\SignProvider\model\ClassifiedSign;
 use Pherser\WordExtractor\model\UnclassifiedWord;
 
@@ -18,7 +19,8 @@ class WordExtractor
     public static function extract(string $text, array $uniqueClassifiedSigns, bool $unique)
     {
         $classifiedSignsByType = static::rearrangeUniqueClassifiedSignsByType($uniqueClassifiedSigns);
-        
+       
+	$breakWords = [];
         $breakTokens = [];
         foreach ($classifiedSignsByType as $type => $classifiedSigns) {
             foreach ($classifiedSigns as $classifiedSign) {
@@ -26,20 +28,46 @@ class WordExtractor
                     case ClassifiedSign::SEPARATION_PUNCTATION_TYPE :
                     case ClassifiedSign::TERMINATION_PUNCTATION_TYPE :
                     case ClassifiedSign::EMPTY_TYPE :
-                    case ClassifiedSign::WORD_TYPE :
                         $breakTokens[] = $classifiedSign;
+                    break;
+                    
+                    case ClassifiedSign::WORD_TYPE :
+	                $breakWords[] = $classifiedSign;
                     break;
                 }
             }
         }
  
-        if (!$breakTokens) {
+        if (!$breakTokens && !$breakWords) {
             return [$text];
-        }
-        
+        }        
+
         $regexp = implode('|', $breakTokens);
     
-        return preg_split("/$regexp/", $text);     
+        $words = preg_split("/$regexp/u", $text);
+        
+	$extractedWords = [];
+        foreach ($words as $word) {
+            $wordChars = SignExtractor::extract($word, false);
+            $foundWordChars = false;
+            
+            if ($breakWords) {
+                $breakWordsAsString = implode('', $breakWords);
+                foreach ($wordChars as $wordChar) {
+                    $sign = $wordChar->getSign();
+                    if (FALSE !== mb_strpos($breakWordsAsString, $sign)) {
+                        $foundWordChars = true;
+                        $extractedWords[] = $sign;
+                    }
+                }    
+            }
+
+            if (!$foundWordChars && !empty($word)) {
+		$extractedWords[] = $word;
+            } 
+        }       
+
+	return $extractedWords; 
     } 
 
     private static function rearrangeUniqueClassifiedSignsByType(array $uniqueClassifiedSigns)

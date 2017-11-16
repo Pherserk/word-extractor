@@ -39,6 +39,12 @@ class WordExtractorTest extends TestCase
             [
                 '这是一个考验',
                 [
+                    new ClassifiedSign('这', ClassifiedSign::WORD_TYPE),
+                    new ClassifiedSign('是', ClassifiedSign::WORD_TYPE),
+                    new ClassifiedSign('一', ClassifiedSign::WORD_TYPE),
+                    new ClassifiedSign('个', ClassifiedSign::WORD_TYPE),
+                    new ClassifiedSign('考', ClassifiedSign::WORD_TYPE),
+                    new ClassifiedSign('验', ClassifiedSign::WORD_TYPE),
                 ],
                 true,
                 ['这', '是', '一', '个' , '考' ,'验',],
