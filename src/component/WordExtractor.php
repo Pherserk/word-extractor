@@ -36,9 +36,9 @@ class WordExtractor
         if (!$breakTokens) {
             return [$text];
         }
-
+        
         $regexp = implode('|', $breakTokens);
-   
+    
         return preg_split("/$regexp/", $text);     
     } 
 
