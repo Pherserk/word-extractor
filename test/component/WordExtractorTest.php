@@ -49,6 +49,22 @@ class WordExtractorTest extends TestCase
                 true,
                 ['这', '是', '一', '个' , '考' ,'验',],
             ],
+            [
+              "这是一个测试。\n这是另一个。",
+              [
+                    new ClassifiedSign('这', ClassifiedSign::WORD_TYPE),
+                    new ClassifiedSign('是', ClassifiedSign::WORD_TYPE),
+                    new ClassifiedSign('一', ClassifiedSign::WORD_TYPE),
+                    new ClassifiedSign('个', ClassifiedSign::WORD_TYPE),
+                    new ClassifiedSign('测', ClassifiedSign::WORD_TYPE),
+                    new ClassifiedSign('试', ClassifiedSign::WORD_TYPE),
+                    new ClassifiedSign('。', ClassifiedSign::WORD_TYPE),
+                    new ClassifiedSign("\n", ClassifiedSign::EMPTY_TYPE),
+                    new ClassifiedSign('另', ClassifiedSign::WORD_TYPE),
+              ],
+              true,
+              ['这', '是', '一', '个', '测', '试' ,'。', '这', '是', '另', '一', '个', '。',]
+            ]
 	];
     }
 }
