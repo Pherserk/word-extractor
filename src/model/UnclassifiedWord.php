@@ -15,7 +15,7 @@ class UnclassifiedWord implements WordInterface
         $this->word = $word;
     }
 
-    public funciton getWord() : string
+    public function getWord() : string
     {
         return $this->word;
     }
