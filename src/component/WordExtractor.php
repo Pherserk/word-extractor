@@ -28,7 +28,7 @@ class WordExtractor
                     case ClassifiedSign::SEPARATION_PUNCTATION_TYPE :
                     case ClassifiedSign::TERMINATION_PUNCTATION_TYPE :
                     case ClassifiedSign::EMPTY_TYPE :
-                        $breakTokens[] = $classifiedSign;
+                        $breakTokens[] = "\\$classifiedSign";
                     break;
                     
                     case ClassifiedSign::WORD_TYPE :
