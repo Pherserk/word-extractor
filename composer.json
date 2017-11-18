@@ -1,5 +1,6 @@
 {
     "name": "pherserk/word-extractor",
+    "license": "GPL-3.0",
     "minimum-stability": "dev",
     "require": {
         "php": ">=7.0",
