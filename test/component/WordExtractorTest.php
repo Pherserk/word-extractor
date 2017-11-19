@@ -84,12 +84,7 @@ class WordExtractorTest extends TestCase
                     new UnclassifiedWord('测'), 
                     new UnclassifiedWord('试'), 
                     new UnclassifiedWord('。'), 
-                    new UnclassifiedWord('这'), 
-                    new UnclassifiedWord('是'), 
                     new UnclassifiedWord('另'),
-                    new UnclassifiedWord('一'), 
-                    new UnclassifiedWord('个'), 
-                    new UnclassifiedWord('。'),
 	      ]
             ]
 	];

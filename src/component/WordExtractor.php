@@ -47,6 +47,7 @@ class WordExtractor
         $words = preg_split("/$regexp/u", $text);
         
 	$extractedWords = [];
+        $taken = [];
         foreach ($words as $word) {
             $wordChars = SignExtractor::extract($word, false);
             $foundWordChars = false;
@@ -55,15 +56,17 @@ class WordExtractor
                 $breakWordsAsString = implode('', $breakWords);
                 foreach ($wordChars as $wordChar) {
                     $sign = $wordChar->getSign();
-                    if (FALSE !== mb_strpos($breakWordsAsString, $sign)) {
+                    if (FALSE !== mb_strpos($breakWordsAsString, $sign) && !(in_array($sign, $taken) && $unique)) {
                         $foundWordChars = true;
                         $extractedWords[] = new UnclassifiedWord($sign);
+                        $taken[] = $sign;
                     }
                 }    
             }
 
-            if (!$foundWordChars && !empty($word)) {
+            if (!$foundWordChars && !empty($word) && !(in_array($word, $taken) && $unique)) {
 		$extractedWords[] = new UnclassifiedWord($word);
+                $taken[] = $word;
             } 
         }       
 
