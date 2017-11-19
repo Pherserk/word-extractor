@@ -5,7 +5,7 @@ namespace Pherserk\WordExtractor\component;
 use Pherserk\Language\model\LanguageInterface;
 use Pherserk\SignExtractor\component\SignExtractor;
 use Pherserk\SignProvider\model\ClassifiedSign;
-use Pherser\WordExtractor\model\UnclassifiedWord;
+use Pherserk\WordExtractor\model\UnclassifiedWord;
 
 class WordExtractor
 {
@@ -57,13 +57,13 @@ class WordExtractor
                     $sign = $wordChar->getSign();
                     if (FALSE !== mb_strpos($breakWordsAsString, $sign)) {
                         $foundWordChars = true;
-                        $extractedWords[] = $sign;
+                        $extractedWords[] = new UnclassifiedWord($sign);
                     }
                 }    
             }
 
             if (!$foundWordChars && !empty($word)) {
-		$extractedWords[] = $word;
+		$extractedWords[] = new UnclassifiedWord($word);
             } 
         }       
 

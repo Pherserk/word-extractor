@@ -4,6 +4,7 @@ namespace Pherserk\WordExtractor\test\component;
 
 use Pherserk\SignProvider\model\ClassifiedSign;
 use Pherserk\WordExtractor\component\WordExtractor;
+use Pherserk\WordExtractor\model\UnclassifiedWord;
 use PHPUnit\Framework\TestCase;
 
 class WordExtractorTest extends TestCase
@@ -34,7 +35,12 @@ class WordExtractorTest extends TestCase
                     new ClassifiedSign('e', ClassifiedSign::LETTER_TYPE),
                 ],
                 true,
-                ['This', 'is', 'a', 'test',],
+                [
+                    new UnclassifiedWord('This'),
+                    new UnclassifiedWord('is'), 
+		    new UnclassifiedWord('a'), 
+                    new UnclassifiedWord('test'),
+                ],
             ],
             [
                 '这是一个考验',
@@ -47,7 +53,14 @@ class WordExtractorTest extends TestCase
                     new ClassifiedSign('验', ClassifiedSign::WORD_TYPE),
                 ],
                 true,
-                ['这', '是', '一', '个' , '考' ,'验',],
+                [
+                    new UnclassifiedWord('这'), 
+                    new UnclassifiedWord('是'), 
+                    new UnclassifiedWord('一'), 
+                    new UnclassifiedWord('个'), 
+                    new UnclassifiedWord('考'),
+                    new UnclassifiedWord('验'),
+                ],
             ],
             [
               "这是一个测试。\n这是另一个。",
@@ -63,7 +76,21 @@ class WordExtractorTest extends TestCase
                     new ClassifiedSign('另', ClassifiedSign::WORD_TYPE),
               ],
               true,
-              ['这', '是', '一', '个', '测', '试' ,'。', '这', '是', '另', '一', '个', '。',]
+              [
+		    new UnclassifiedWord('这'), 
+		    new UnclassifiedWord('是'), 
+		    new UnclassifiedWord('一'), 
+                    new UnclassifiedWord('个'), 
+                    new UnclassifiedWord('测'), 
+                    new UnclassifiedWord('试'), 
+                    new UnclassifiedWord('。'), 
+                    new UnclassifiedWord('这'), 
+                    new UnclassifiedWord('是'), 
+                    new UnclassifiedWord('另'),
+                    new UnclassifiedWord('一'), 
+                    new UnclassifiedWord('个'), 
+                    new UnclassifiedWord('。'),
+	      ]
             ]
 	];
     }
